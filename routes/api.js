@@ -4,13 +4,6 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const apiUrl = require('../util/urlMapper');
 const urlencode = require('urlencode');
 
-const options = {
-  method: 'GET',
-  headers: {
-    "X-Riot-Token": process.env.API_KEY
-  }
-};
-
 /* GET api listing. */
 router.get('/getSummoners/:summonerName', async function(req, res, next) {
 
@@ -24,7 +17,14 @@ router.get('/getSummoners/:summonerName', async function(req, res, next) {
     return res.status(404).json({msg: `	Data not found`});
   }
 
-  const url = process.env.API_HOST +  apiUrl.getSummoners + urlencode.encode(summonerName);
+  const url = process.env.API_SEARCH_HOST +  apiUrl.getSummoners + urlencode.encode(summonerName);
+
+  const options = {
+    method: 'GET',
+    headers: {
+      "X-Riot-Token": process.env.API_KEY
+    }
+  };
 
   // promise syntax
 	fetch(url, options)
@@ -55,7 +55,14 @@ router.get('/getLeagueInfo/:encryptedSummonerId', async function(req, res, next)
     return res.status(404).json({msg: `	Data not found`});
   }
 
-  const url = process.env.API_HOST +  apiUrl.getLeagueInfo + urlencode.encode(encryptedSummonerId);
+  const url = process.env.API_SEARCH_HOST +  apiUrl.getLeagueInfo + urlencode.encode(encryptedSummonerId);
+
+  const options = {
+    method: 'GET',
+    headers: {
+      "X-Riot-Token": process.env.API_KEY
+    }
+  };
 
   // promise syntax
 	fetch(url, options)
@@ -89,6 +96,12 @@ router.get('/getMatchId/:puuid', async function(req, res, next) {
   const url = process.env.API_HOST +  apiUrl.getMatchId + urlencode.encode(puuid) + "/ids";
 
   console.log("url >> ",url);
+  const options = {
+    method: 'GET',
+    headers: {
+      "X-Riot-Token": process.env.API_KEY
+    }
+  };
 
   // promise syntax
 	fetch(url, options)
@@ -121,6 +134,13 @@ router.get('/getMatchDetail/:matchId', async function(req, res, next) {
 
   const url = process.env.API_HOST +  apiUrl.getMatchDetail + urlencode.encode(matchId);
 
+  const options = {
+    method: 'GET',
+    headers: {
+      "X-Riot-Token": process.env.API_KEY
+    }
+  };
+
   // promise syntax
 	fetch(url, options)
   .then(res => res.json())
@@ -152,6 +172,13 @@ router.get('/getMatchTimeLine/:matchId', async function(req, res, next) {
   }
 
   const url = process.env.API_HOST +  apiUrl.getMatchTimeLine + urlencode.encode(matchId) + "/timeline";
+
+  const options = {
+    method: 'GET',
+    headers: {
+      "X-Riot-Token": process.env.API_KEY
+    }
+  };
 
   // promise syntax
 	fetch(url, options)
